@@ -17,7 +17,7 @@ if not GEMINI_API_KEY:
 genai.configure(api_key=GEMINI_API_KEY)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://ats-2-0-1.onrender.com/"])
 
 # --- NEW ENDPOINT ADDED HERE FOR TESTING PUBLIC ACCESSIBILITY ---
 @app.route('/')
