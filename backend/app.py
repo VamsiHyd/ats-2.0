@@ -19,6 +19,12 @@ genai.configure(api_key=GEMINI_API_KEY)
 app = Flask(__name__)
 CORS(app)
 
+# --- NEW ENDPOINT ADDED HERE FOR TESTING PUBLIC ACCESSIBILITY ---
+@app.route('/')
+def home():
+    return jsonify({"message": "Backend is running!"})
+# --- END NEW ENDPOINT ---
+
 # Extract score from model output
 def extract_score(text):
     match = re.search(r"\b(\d{1,3})\s*/\s*100\b", text)
@@ -173,7 +179,7 @@ def evaluate_resumes():
             matched = matched_match.group(1).strip() if matched_match else "Not Found"
             missing = missing_match.group(1).strip() if missing_match else "Not Found"
             feedback = feedback_match.group(1).strip() if feedback_match else "Could not extract final thoughts."
-            
+
             results.append({
                 "filename": filename,
                 "score": score,
