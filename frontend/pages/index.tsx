@@ -41,7 +41,7 @@ export default function Home() {
     files.forEach(file => formData.append("resumes", file));
 
     try {
-      const res = await fetch("http://localhost:8001/evaluate-resumes", {
+      const res = await fetch(`${API_URL}/evaluate-resumes`, {
         method: "POST",
         body: formData,
       });
