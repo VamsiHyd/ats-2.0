@@ -5,8 +5,7 @@ import google.generativeai as genai
 import os
 import io
 import re
-import pytesseract
-import pdf2image
+import pdfplumber
 
 # Load environment variables
 load_dotenv()
@@ -35,16 +34,15 @@ def extract_score(text):
         return int(match.group(1))
     return 0
 
-# OCR: Extract text from PDF
 def convert_pdf_to_text(pdf_file):
     try:
-        images = pdf2image.convert_from_bytes(pdf_file.read())
         text = ""
-        for page in images[:2]:  # first 2 pages only
-            text += pytesseract.image_to_string(page)
+        with pdfplumber.open(io.BytesIO(pdf_file.read())) as pdf:
+            for page in pdf.pages[:2]:  # first 2 pages only
+                text += page.extract_text() or ""
         return text.strip()
     except Exception as e:
-        print("❌ OCR error:", e)
+        print("❌ pdfplumber error:", e)
         return None
 
 # Gemini text generation
