@@ -1,8 +1,6 @@
 flask
 flask-cors
 python-dotenv
-pdf2image
-pytesseract
 google-generativeai
 gunicorn
-
+pdfplumber
